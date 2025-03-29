@@ -4,7 +4,7 @@ import React from 'react';
 import Loading from '@/components/loading';
 import { useFilmsQuery } from '@/generated/graphql';
 import { Waypoint } from 'react-waypoint';
-import FilmCard from '@/app/home/components/film-card';
+import FilmCard from '@/app/films/components/film-card';
 
 const FilmList = () => {
   const LIMIT = 6;
