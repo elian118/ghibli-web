@@ -1,22 +1,11 @@
 'use client';
 
 import React from 'react';
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/client';
 import Loading from '@/components/loading';
-
-const FILM_LIST = gql`
-  query FilmList {
-    films {
-      id
-      title
-      subtitle
-    }
-  }
-`;
+import { useFilmsQuery } from '@/generated/graphql';
 
 const FilmList = () => {
-  const { data, loading, error } = useQuery(FILM_LIST);
+  const { data, loading, error } = useFilmsQuery();
 
   if (loading) return <Loading />;
   if (error) return <p>{error.message}</p>;
