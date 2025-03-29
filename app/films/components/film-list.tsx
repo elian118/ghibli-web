@@ -4,7 +4,8 @@ import React from 'react';
 import Loading from '@/components/loading';
 import { useFilmsQuery } from '@/generated/graphql';
 import { Waypoint } from 'react-waypoint';
-import FilmCard from '@/app/films/components/film-card';
+import FilmCard from '@/components/film-card';
+import PageErrorView from '@/components/page-error-view';
 
 const FilmList = () => {
   const LIMIT = 6;
@@ -19,6 +20,7 @@ const FilmList = () => {
 
   return (
     <div className="max-h-full overflow-scroll">
+      {error && <PageErrorView />}
       {loading ? (
         <Loading />
       ) : (
