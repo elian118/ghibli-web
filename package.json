@@ -1,6 +1,8 @@
 {
   "name": "ghibli-web",
   "version": "0.1.0",
+  "description": "지브리스튜디오 자료 검색 웹 서비스",
+  "author": "김광회 <postelian@gmail.com> (https://github.com/elian118)",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -9,19 +11,30 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "next": "15.2.4",
+    "prettier": "^3.5.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.2.4"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "daisyui": "^5.0.9",
     "eslint": "^9",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "15.2.4",
-    "@eslint/eslintrc": "^3"
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-prettier": "^5.2.5",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
