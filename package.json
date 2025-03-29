@@ -11,6 +11,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.5",
+    "graphql": "^16.10.0",
     "next": "15.2.4",
     "prettier": "^3.5.3",
     "react": "^19.0.0",
