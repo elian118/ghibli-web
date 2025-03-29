@@ -14,12 +14,12 @@ const FilmDetail = ({ filmId }: FilmPageProps) => {
   const { data, loading, error } = useFilmQuery({ variables: { filmId: Number(filmId) } });
 
   return (
-    <div>
+    <div className="overflow-scroll">
       {error && <PageErrorView />}
       {loading ? (
         <Loading />
       ) : (
-        <div className="flex gap-8">
+        <div className="flex gap-8 flex-wrap xl:flex-nowrap">
           <div className="min-w-1/4">
             <FilmCard film={data?.film} isHideDetails />
           </div>
