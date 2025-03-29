@@ -7,23 +7,27 @@ import { useFilmsQuery } from '@/generated/graphql';
 const FilmList = () => {
   const { data, loading, error } = useFilmsQuery();
 
-  if (loading) return <Loading />;
   if (error) return <p>{error.message}</p>;
 
-  // const [films, setFilms] = useState<Film[]>([]);
-
-  // useEffect(() => setFilms(data.films), []);
-
   return (
-    <div className="h-9/12">
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      {/*{films?.map((film) => (*/}
-      {/*  <div key={film.id}>*/}
-      {/*    <div>{film.id}</div>*/}
-      {/*    <div>{film.title}</div>*/}
-      {/*    <div>{film.subtitle}</div>*/}
-      {/*  </div>*/}
-      {/*))}*/}
+    <div className="max-h-full overflow-y-scroll">
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="flex flex-wrap items-center justify-center gap-8">
+          {data?.films?.map((film) => (
+            <div key={film.id} className="card shadow-sm">
+              <figure>
+                <img src={film.posterImg} alt={film.title} />
+              </figure>
+              <div className="card-body">
+                <h2 className="card-title">{film.title}</h2>
+                <div>{film.subtitle}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
