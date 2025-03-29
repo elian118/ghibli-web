@@ -34,7 +34,7 @@ const FilmDetail = ({ filmId }: FilmPageProps) => {
             <p className="font-extrabold text-4xl">{data?.film?.title}</p>
             <p className="font-bold text-3xl">{data?.film?.subtitle}</p>
             <p className="text-2xl">
-              {data?.film?.director?.name ?? '(이름 없음)'}﹒{data?.film?.runningTime}
+              {data?.film?.director?.name ?? '(이름 없음)'}﹒{data?.film?.runningTime}분
             </p>
             <p className="text-xl">{data?.film?.description}</p>
           </div>
