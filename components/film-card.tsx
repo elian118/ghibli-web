@@ -20,7 +20,7 @@ const FilmCard = ({ film, isHideDetails }: FilmCardProps) => {
       </figure>
       <div className={`card-body ${isHideDetails ? 'hidden' : ''}`}>
         <h2 className="card-title">{film?.title}</h2>
-        <div className="min-h-5 truncate">{film?.subtitle}</div>
+        <div className="min-h-5 w-68 sm:w-full truncate">{film?.subtitle}</div>
       </div>
     </Link>
   );
