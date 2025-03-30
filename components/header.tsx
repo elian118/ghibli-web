@@ -23,7 +23,9 @@ const Header = () => {
           ))}
       </div>
       <div className="flex items-center gap-2">
-        {/*<Link href="auth">로그인</Link>*/}
+        <Link href="/login">
+          <span className={isCurrentPage('/auth')}>로그인</span>
+        </Link>
         <Link href="/auth">
           <span className={isCurrentPage('/auth')}>시작하기</span>
         </Link>
