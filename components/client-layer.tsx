@@ -5,6 +5,8 @@ import { GlobalContext, GlobalContextType, initModal, ModalState } from '@/globa
 import { isMobile } from '@/hooks';
 import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { createApolloCache } from '@/apollo/createApolloCache';
+import { ToastProps } from '@/types';
+import ToastContainer from '@/components/toast-container';
 
 const apolloClient = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -16,6 +18,7 @@ const ClientLayer = ({ children }: { children: React.ReactNode }) => {
   const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState<boolean>(false);
   const [modal, setModal] = useState<ModalState>(initModal);
+  const [toasts, setToasts] = useState<ToastProps[]>([]);
 
   useEffect(() => {
     if (isMobile()) {
@@ -28,6 +31,7 @@ const ClientLayer = ({ children }: { children: React.ReactNode }) => {
     isMobileDeviceState: [isMobileDevice, setIsMobileDevice],
     isOpenMobileMenuState: [isOpenMobileMenu, setIsOpenMobileMenu],
     modalState: [modal, setModal],
+    toastsState: [toasts, setToasts],
   };
 
   return (
@@ -35,6 +39,7 @@ const ClientLayer = ({ children }: { children: React.ReactNode }) => {
       <ApolloProvider client={apolloClient}>
         <div className="mx-auto" data-theme={isDark ? 'dark' : 'light'}>
           {children}
+          <ToastContainer />
         </div>
       </ApolloProvider>
     </GlobalContext.Provider>

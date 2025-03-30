@@ -33,3 +33,35 @@ body {
 .pageContainer {
   @apply md:-mx-[14%] md:px-[14%] lg:-mx-[18.7%] lg:px-[18.7%] overflow-scroll;
 }
+
+.input {
+  outline: none;
+}
+
+.slideUpAnimation {
+  animation: slideUp 0.5s ease-in-out;
+}
+
+.fadeOutAnimation {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%); /* 요소의 위치를 아래로 이동 */
+    opacity: 0; /* 요소의 투명도를 0으로 설정 */
+  }
+  100% {
+    transform: translateY(0); /* 요소의 위치를 원래대로 설정 */
+    opacity: 1; /* 요소의 투명도를 1로 설정 */
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1; /* 요소의 투명도를 0으로 설정 */
+  }
+  100% {
+    opacity: 0; /* 요소의 투명도를 1로 설정 */
+  }
+}

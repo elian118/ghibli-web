@@ -1,4 +1,5 @@
 import React, { createContext } from 'react';
+import { ToastProps } from '@/types';
 
 export type ModalState = {
   isOpen?: boolean;
@@ -13,6 +14,7 @@ export type GlobalContextType = {
   isMobileDeviceState: [boolean, (val: boolean) => void];
   isOpenMobileMenuState: [boolean, (val: boolean) => void];
   modalState: [modal: ModalState, setModal: (val: ModalState) => void];
+  toastsState: [toasts: ToastProps[], setToasts: (toasts: ToastProps[]) => void];
 };
 
 export const initModal: ModalState = {
@@ -24,7 +26,7 @@ export const initGlobalContext: GlobalContextType = {
   isMobileDeviceState: [false, () => {}],
   isOpenMobileMenuState: [false, () => {}],
   modalState: [{ isOpen: false }, () => {}],
+  toastsState: [[], () => {}],
 };
 
-export const GlobalContext: React.Context<GlobalContextType> =
-  createContext(initGlobalContext);
+export const GlobalContext: React.Context<GlobalContextType> = createContext(initGlobalContext);

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 };
 
 const FilmsLayout = ({ children }: { children: React.ReactNode }) => {
-  return <div>{children}</div>;
+  return <div className="bg-base-200">{children}</div>;
 };
 
 export default FilmsLayout;
