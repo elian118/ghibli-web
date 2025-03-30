@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { LoginMutationVariables, useLoginMutation } from '@/generated/graphql';
 import Btn from '@/components/btn';
+import LocalStorage from '@/utils/LocalStorage';
 
 const LoginInput = () => {
   const router = useRouter();
@@ -18,7 +19,6 @@ const LoginInput = () => {
 
   const onSubmit = async (formData: LoginMutationVariables) => {
     const { data } = await login({ variables: formData });
-    console.log(data);
     if (data?.login.errors) {
       data?.login.errors.forEach((err) => {
         const field = 'loginInput.';
@@ -29,7 +29,7 @@ const LoginInput = () => {
       });
     }
     if (data && data.login.accessToken) {
-      localStorage.setItem('accessToken', data.login.accessToken);
+      LocalStorage.setItem('accessToken', data.login.accessToken);
       router.push('/films');
     }
   };

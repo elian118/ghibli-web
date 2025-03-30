@@ -4,7 +4,7 @@ import React from 'react';
 import Btn from '@/components/btn';
 import { SignUpMutationVariables, useSignUpMutation } from '@/generated/graphql';
 import { useForm } from 'react-hook-form';
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@/hooks';
 import { useRouter } from 'next/navigation';
 
 const SignUpInput = () => {

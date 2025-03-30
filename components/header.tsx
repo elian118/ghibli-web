@@ -1,14 +1,19 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import LogoutNavbarItem from '@/components/LogoutNavbarItem';
+import { useMeQuery } from '@/generated/graphql';
+import LoggedInNavbarItem from '@/components/logged-in-navbar-item';
+import LocalStorage from '@/utils/LocalStorage';
 
 const Header = () => {
-  const pathname = usePathname();
-  const isCurrentPage = (path: any) => {
-    return pathname.split('/')[1] === path.replace('/', '') ? 'font-bold' : '';
-  };
+  const accessToken = LocalStorage.getItem('accessToken');
+  const { data } = useMeQuery({ skip: !accessToken });
+  const isLoggedIn = useMemo(() => {
+    if (accessToken) return data?.me?.id;
+    return false;
+  }, [accessToken, data?.me?.id]);
 
   return (
     <div className="h-14 px-8 flex justify-between items-center">
@@ -17,14 +22,7 @@ const Header = () => {
           GhibliBestCut
         </Link>
       </div>
-      <div className="flex items-center gap-2">
-        <Link href="/login">
-          <span className={isCurrentPage('/auth')}>로그인</span>
-        </Link>
-        <Link href="/auth">
-          <span className={isCurrentPage('/auth')}>시작하기</span>
-        </Link>
-      </div>
+      {isLoggedIn ? <LoggedInNavbarItem data={data} /> : <LogoutNavbarItem />}
     </div>
   );
 };
