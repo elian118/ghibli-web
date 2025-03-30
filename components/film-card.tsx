@@ -12,7 +12,7 @@ const FilmCard = ({ film, isHideDetails }: FilmCardProps) => {
     <Link
       href={`/film/${film?.id}`}
       key={film?.id}
-      className={`my-1 card card-sm shadow-sm delay-150 duration-300 ease-in-out ${isHideDetails ? 'pointer-events-none' : 'hover:scale-105'} `}
+      className={`my-1 card card-sm shadow-sm transition-transform duration-150 ease-in-out ${isHideDetails ? 'pointer-events-none' : 'hover:scale-105'} `}
     >
       <figure className={`${isHideDetails ? 'rounded-lg' : ''}`}>
         <img src={film?.posterImg} alt={film?.title} />

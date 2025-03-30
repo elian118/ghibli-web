@@ -24,7 +24,7 @@ const FilmList = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div className="flex flex-wrap justify-center gap-8">
+        <div className="flex flex-wrap justify-center gap-8 my-4">
           {data?.films?.films?.map((film, i) => (
             <div key={film.id}>
               {data?.films.cursor && i === data.films.films.length - LIMIT / 2 && (
