@@ -8,7 +8,7 @@ type FilmPageProps = {
 
 const FilmContainer = ({ filmId }: FilmPageProps) => {
   return (
-    <div className="overflow-scroll">
+    <div className="pageContainer">
       <FilmDetail filmId={filmId} />
       <FilmCuts filmId={Number(filmId)} />
     </div>

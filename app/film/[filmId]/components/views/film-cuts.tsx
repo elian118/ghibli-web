@@ -14,9 +14,12 @@ const FilmCuts = ({ filmId }: CutsQueryVariables) => {
       {loading ? (
         <Loading />
       ) : (
-        <div className="flex flex-wrap gap-6">
+        <div className="flex justify-center flex-wrap gap-6">
           {data?.cuts.map((c, cIdx) => (
-            <div key={cIdx} className="w-full md:w-[48%] lg:w-[31%]">
+            <div
+              key={cIdx}
+              className="w-full md:w-[48%] lg:w-[31.5%] transition-transform duration-150 ease-in-out hover:scale-105"
+            >
               <Image className="rounded-lg" src={c.src} alt={c.src} width={500} height={300} layout="responsive" />
             </div>
           ))}

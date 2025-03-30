@@ -29,3 +29,7 @@ body {
 .mainContainer {
   height: calc(100vh - 56px);
 }
+
+.pageContainer {
+  @apply md:-mx-[14%] md:px-[14%] lg:-mx-[18.7%] lg:px-[18.7%] overflow-scroll;
+}

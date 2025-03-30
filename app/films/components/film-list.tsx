@@ -19,7 +19,7 @@ const FilmList = () => {
   if (error) return <p>{error.message}</p>;
 
   return (
-    <div className="max-h-full overflow-scroll">
+    <div className="pageContainer">
       {error && <PageErrorView />}
       {loading ? (
         <Loading />
