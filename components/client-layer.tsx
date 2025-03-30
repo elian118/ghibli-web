@@ -3,15 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { GlobalContext, GlobalContextType, initModal, ModalState } from '@/global-context';
 import { isMobile } from '@/hooks';
-import { ApolloClient, ApolloProvider } from '@apollo/client';
-import { createApolloCache } from '@/apollo/createApolloCache';
+import { ApolloProvider } from '@apollo/client';
 import { ToastProps } from '@/types';
 import ToastContainer from '@/components/toast-container';
+import { createApolloClient } from '@/apollo/createApolloClient';
 
-const apolloClient = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
-  cache: createApolloCache(),
-});
+const apolloClient = createApolloClient();
 
 const ClientLayer = ({ children }: { children: React.ReactNode }) => {
   const [isDark, setIsDark] = useState<boolean>(false);
