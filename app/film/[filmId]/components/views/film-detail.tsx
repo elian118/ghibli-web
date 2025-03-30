@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { useFilmQuery } from '@/generated/graphql';
-import Loading from '@/app/films/loading';
-import PageErrorView from '@/components/page-error-view';
 import FilmCard from '@/components/film-card';
+import PageErrorView from '@/components/page-error-view';
+import Loading from '@/app/films/loading';
 
 type FilmPageProps = {
   filmId: string;
