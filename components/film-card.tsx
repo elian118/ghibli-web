@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { FilmQuery, FilmsQuery } from '@/generated/graphql';
 import Link from 'next/link';
 
@@ -15,7 +16,7 @@ const FilmCard = ({ film, isHideDetails }: FilmCardProps) => {
       className={`my-1 card card-sm shadow-sm transition-transform duration-150 ease-in-out ${isHideDetails ? 'pointer-events-none' : 'hover:scale-105'} `}
     >
       <figure className={`${isHideDetails ? 'rounded-lg' : ''}`}>
-        <img src={film?.posterImg} alt={film?.title} />
+        <Image width={500} height={300} src={film?.posterImg!} alt={film?.title!} layout="responsive" />
       </figure>
       <div className={`card-body ${isHideDetails ? 'hidden' : ''}`}>
         <h2 className="card-title">{film?.title}</h2>
