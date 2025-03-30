@@ -1,0 +1,9 @@
+query MeQuery {
+    me {
+        id
+        username
+        email
+        updatedAt
+        createdAt
+    }
+}

@@ -104,6 +104,7 @@ export type Query = {
   cuts: Array<Cut>;
   film?: Maybe<Film>;
   films: PaginatedFilms;
+  me?: Maybe<User>;
 };
 
 
@@ -181,6 +182,11 @@ export type LoginMutationVariables = Exact<{
 
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken?: string | null, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, email: string } | null } };
+
+export type MeQueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQueryQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, username: string, email: string, updatedAt: string, createdAt: string } | null };
 
 export type SignUpMutationVariables = Exact<{
   signUpInput: SignUpInput;
@@ -421,6 +427,49 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const MeQueryDocument = gql`
+    query MeQuery {
+  me {
+    id
+    username
+    email
+    updatedAt
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useMeQueryQuery__
+ *
+ * To run a query within a React component, call `useMeQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeQueryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeQueryQuery(baseOptions?: Apollo.QueryHookOptions<MeQueryQuery, MeQueryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MeQueryQuery, MeQueryQueryVariables>(MeQueryDocument, options);
+      }
+export function useMeQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQueryQuery, MeQueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MeQueryQuery, MeQueryQueryVariables>(MeQueryDocument, options);
+        }
+export function useMeQuerySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<MeQueryQuery, MeQueryQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MeQueryQuery, MeQueryQueryVariables>(MeQueryDocument, options);
+        }
+export type MeQueryQueryHookResult = ReturnType<typeof useMeQueryQuery>;
+export type MeQueryLazyQueryHookResult = ReturnType<typeof useMeQueryLazyQuery>;
+export type MeQuerySuspenseQueryHookResult = ReturnType<typeof useMeQuerySuspenseQuery>;
+export type MeQueryQueryResult = Apollo.QueryResult<MeQueryQuery, MeQueryQueryVariables>;
 export const SignUpDocument = gql`
     mutation SignUp($signUpInput: SignUpInput!) {
   signUp(signUpInput: $signUpInput) {

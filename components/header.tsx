@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { menus } from '@/consts/menus';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -14,13 +13,9 @@ const Header = () => {
   return (
     <div className="h-14 px-8 flex justify-between items-center">
       <div className="flex items-center gap-2">
-        {menus
-          .filter((x) => !x.isHide)
-          .map((m) => (
-            <Link key={m.link} href={m.link}>
-              <span className={isCurrentPage(m.link)}>{m.name}</span>
-            </Link>
-          ))}
+        <Link className="text-3xl font-extrabold" href="/films">
+          GhibliBestCut
+        </Link>
       </div>
       <div className="flex items-center gap-2">
         <Link href="/login">
