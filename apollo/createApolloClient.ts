@@ -24,6 +24,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:4000/graphql',
+  credentials: 'include', // CORS 자격증명 모드 → 'include' 설정
 });
 
 const authLink = setContext((_, prevContext) => {
