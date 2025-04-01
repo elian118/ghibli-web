@@ -1,12 +1,21 @@
 'use client';
 
-import React from 'react';
+import React, { useContext, useMemo } from 'react';
 import Image from 'next/image';
 import { CutSeen } from '@/app/film/[filmId]/types';
-import { CutDocument, CutQuery, CutQueryVariables, useCutQuery, useVoteMutation } from '@/generated/graphql';
+import {
+  CutDocument,
+  CutQuery,
+  CutQueryVariables,
+  useCutQuery,
+  useMeQuery,
+  useVoteMutation,
+} from '@/generated/graphql';
 import PageErrorView from '@/components/page-error-view';
 import Loading from '@/components/loading';
 import Btn from '@/components/btn';
+import { GlobalContext } from '@/global-context';
+import { useToast } from '@/hooks';
 
 type FilmCutModalProps = {
   filmCutRef: React.RefObject<HTMLDialogElement | null>;
@@ -14,8 +23,17 @@ type FilmCutModalProps = {
 };
 
 const FilmCutModal = ({ filmCutRef, cutSeen }: FilmCutModalProps) => {
+  const { accessTokenState } = useContext(GlobalContext);
   const { cutId } = cutSeen;
   const { data, error, loading } = useCutQuery({ variables: { cutId: cutId } });
+  const [accessToken] = accessTokenState;
+  const { data: userData } = useMeQuery({ skip: !accessToken });
+  const { toast } = useToast();
+  const isLoggedIn = useMemo(() => {
+    if (accessToken) return userData?.me?.id;
+    return false;
+  }, [accessToken, userData?.me?.id]);
+
   const [vote, { loading: voteLoading }] = useVoteMutation({
     variables: { cutId: cutId },
     update: (cache, fetchResult) => {
@@ -45,8 +63,15 @@ const FilmCutModal = ({ filmCutRef, cutSeen }: FilmCutModalProps) => {
     },
   });
 
-  const closeCutModal = () => {
-    filmCutRef.current?.close();
+  const closeCutModal = () => filmCutRef.current?.close();
+
+  const onClickLike = async () => {
+    isLoggedIn
+      ? await vote()
+      : toast({
+          status: 'alert-warning',
+          title: '좋아요 표시는 로그인한 이후 가능합니다.',
+        });
   };
 
   return (
@@ -79,7 +104,7 @@ const FilmCutModal = ({ filmCutRef, cutSeen }: FilmCutModalProps) => {
                     <Btn
                       isLoading={voteLoading}
                       className={`btn btn-sm ${data?.cut?.isVoted ? 'btn-secondary' : 'btn-base'}`}
-                      onClick={() => vote()}
+                      onClick={onClickLike}
                     >
                       ❤️ {data?.cut?.votesCount}
                     </Btn>
