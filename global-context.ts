@@ -15,6 +15,7 @@ export type GlobalContextType = {
   isOpenMobileMenuState: [boolean, (val: boolean) => void];
   modalState: [modal: ModalState, setModal: (val: ModalState) => void];
   toastsState: [toasts: ToastProps[], setToasts: (toasts: ToastProps[]) => void];
+  accessTokenState: [accessToken: string | null, setAccessToken: (token: string | null) => void];
 };
 
 export const initModal: ModalState = {
@@ -27,6 +28,7 @@ export const initGlobalContext: GlobalContextType = {
   isOpenMobileMenuState: [false, () => {}],
   modalState: [{ isOpen: false }, () => {}],
   toastsState: [[], () => {}],
+  accessTokenState: [null, () => {}],
 };
 
 export const GlobalContext: React.Context<GlobalContextType> = createContext(initGlobalContext);

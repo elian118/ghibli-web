@@ -1,18 +1,20 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useLogoutMutation, useMeQuery } from '@/generated/graphql';
 import { useApolloClient } from '@apollo/client';
 import LocalStorage from '@/utils/LocalStorage';
 import { useRouter } from 'next/navigation';
 import Btn from '@/components/btn';
+import { GlobalContext } from '@/global-context';
 
 const LoggedInNavbarItem = () => {
   const router = useRouter();
   const client = useApolloClient();
   const [logout, { loading: logoutLoading }] = useLogoutMutation();
 
-  const accessToken = LocalStorage.getItem('accessToken');
+  const { accessTokenState } = useContext(GlobalContext);
+  const [accessToken, setAccessToken] = accessTokenState;
   const { data } = useMeQuery({ skip: !accessToken });
   const username = useMemo(() => {
     if (data?.me?.username) {
@@ -24,9 +26,10 @@ const LoggedInNavbarItem = () => {
   const onLogoutClick = async () => {
     try {
       await logout();
-      LocalStorage.removeItem('accessToken');
-      await client.resetStore();
       router.push('/login');
+      LocalStorage.removeItem('accessToken');
+      setAccessToken(null);
+      await client.resetStore(); // 아폴로 클라이언트 캐시 초기화
     } catch (error) {
       console.error(error);
     }

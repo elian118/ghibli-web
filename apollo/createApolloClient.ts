@@ -10,7 +10,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject>;
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
   if (graphQLErrors) {
     if (graphQLErrors.find((err) => err.message === 'access token expired')) {
-      console.log('access token expired');
+      console.log('refreshAccessToken');
       // onError 콜백은 async 사용 불가 ➝ fromPromise 대신 사용
       return fromPromise(refreshAccessToken(apolloClient, operation))
         .filter((result) => !!result)

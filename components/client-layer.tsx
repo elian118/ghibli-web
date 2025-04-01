@@ -7,6 +7,8 @@ import { ApolloProvider } from '@apollo/client';
 import { ToastProps } from '@/types';
 import ToastContainer from '@/components/toast-container';
 import { createApolloClient } from '@/apollo/createApolloClient';
+import LocalStorage from '@/utils/LocalStorage';
+import { useRouter } from 'next/navigation';
 
 const apolloClient = createApolloClient();
 
@@ -16,11 +18,16 @@ const ClientLayer = ({ children }: { children: React.ReactNode }) => {
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState<boolean>(false);
   const [modal, setModal] = useState<ModalState>(initModal);
   const [toasts, setToasts] = useState<ToastProps[]>([]);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (isMobile()) {
       setIsMobileDevice(true);
     }
+    const accessToken = LocalStorage.getItem('accessToken');
+    !!accessToken ? setAccessToken(accessToken) : router.push('/login');
   }, []);
 
   const value: GlobalContextType = {
@@ -29,6 +36,7 @@ const ClientLayer = ({ children }: { children: React.ReactNode }) => {
     isOpenMobileMenuState: [isOpenMobileMenu, setIsOpenMobileMenu],
     modalState: [modal, setModal],
     toastsState: [toasts, setToasts],
+    accessTokenState: [accessToken, setAccessToken],
   };
 
   return (

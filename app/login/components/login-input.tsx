@@ -1,14 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { LoginMutationVariables, useLoginMutation } from '@/generated/graphql';
 import Btn from '@/components/btn';
 import LocalStorage from '@/utils/LocalStorage';
+import { GlobalContext } from '@/global-context';
 
 const LoginInput = () => {
   const router = useRouter();
+  const { accessTokenState } = useContext(GlobalContext);
+  const [, setAccessToken] = accessTokenState;
   const [login, { loading }] = useLoginMutation();
   const {
     register,
@@ -30,6 +33,7 @@ const LoginInput = () => {
     }
     if (data && data.login.accessToken) {
       LocalStorage.setItem('accessToken', data.login.accessToken);
+      setAccessToken(data.login.accessToken);
       router.push('/films');
     }
   };
