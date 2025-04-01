@@ -3,9 +3,10 @@
 import React from 'react';
 import Image from 'next/image';
 import { CutSeen } from '@/app/film/[filmId]/types';
-import { useCutQuery } from '@/generated/graphql';
+import { CutDocument, CutQuery, CutQueryVariables, useCutQuery, useVoteMutation } from '@/generated/graphql';
 import PageErrorView from '@/components/page-error-view';
 import Loading from '@/components/loading';
+import Btn from '@/components/btn';
 
 type FilmCutModalProps = {
   filmCutRef: React.RefObject<HTMLDialogElement | null>;
@@ -13,7 +14,36 @@ type FilmCutModalProps = {
 };
 
 const FilmCutModal = ({ filmCutRef, cutSeen }: FilmCutModalProps) => {
-  const { data, error, loading } = useCutQuery({ variables: { cutId: cutSeen.cutId } });
+  const { cutId } = cutSeen;
+  const { data, error, loading } = useCutQuery({ variables: { cutId: cutId } });
+  const [vote, { loading: voteLoading }] = useVoteMutation({
+    variables: { cutId: cutId },
+    update: (cache, fetchResult) => {
+      // 'cut' Query 조회
+      const currentCut = cache.readQuery<CutQuery, CutQueryVariables>({
+        query: CutDocument,
+        variables: { cutId },
+      });
+      if (currentCut && currentCut.cut) {
+        if (fetchResult.data?.vote) {
+          // 'cut' Query 데이터 재설정
+          cache.writeQuery<CutQuery, CutQueryVariables>({
+            query: CutDocument,
+            variables: { cutId: currentCut.cut.id },
+            data: {
+              __typename: 'Query',
+              ...currentCut,
+              cut: {
+                ...currentCut.cut,
+                votesCount: data?.cut?.isVoted ? currentCut.cut.votesCount - 1 : currentCut.cut.votesCount + 1,
+                isVoted: !data?.cut?.isVoted,
+              },
+            },
+          });
+        }
+      }
+    },
+  });
 
   const closeCutModal = () => {
     filmCutRef.current?.close();
@@ -46,7 +76,13 @@ const FilmCutModal = ({ filmCutRef, cutSeen }: FilmCutModalProps) => {
                 <div className="w-full flex justify-between">
                   <p className="font-bold tex-2xl">{cutSeen.cIdx + 1}번째 사진</p>
                   <div className="flex gap-2">
-                    <button className="btn btn-sm btn-outline">❤️</button>
+                    <Btn
+                      isLoading={voteLoading}
+                      className={`btn btn-sm ${data?.cut?.isVoted ? 'btn-secondary' : 'btn-base'}`}
+                      onClick={() => vote()}
+                    >
+                      ❤️ {data?.cut?.votesCount}
+                    </Btn>
                     <button className="btn btn-sm btn-primary">감상 남기기</button>
                   </div>
                 </div>
