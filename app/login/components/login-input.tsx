@@ -1,17 +1,16 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { LoginMutationVariables, useLoginMutation } from '@/generated/graphql';
 import Btn from '@/components/btn';
+import { useGlobalStore } from '@/global-store';
 import LocalStorage from '@/utils/LocalStorage';
-import { GlobalContext } from '@/global-context';
 
 const LoginInput = () => {
   const router = useRouter();
-  const { accessTokenState } = useContext(GlobalContext);
-  const [, setAccessToken] = accessTokenState;
+  const { setAccessToken } = useGlobalStore();
   const [login, { loading }] = useLoginMutation();
   const {
     register,

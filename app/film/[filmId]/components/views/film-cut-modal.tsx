@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Image from 'next/image';
 import { CutSeen } from '@/app/film/[filmId]/types';
 import {
@@ -14,8 +14,8 @@ import {
 import PageErrorView from '@/components/page-error-view';
 import Loading from '@/components/loading';
 import Btn from '@/components/btn';
-import { GlobalContext } from '@/global-context';
 import { useToast } from '@/hooks';
+import { useGlobalStore } from '@/global-store';
 
 type FilmCutModalProps = {
   filmCutRef: React.RefObject<HTMLDialogElement | null>;
@@ -23,10 +23,9 @@ type FilmCutModalProps = {
 };
 
 const FilmCutModal = ({ filmCutRef, cutSeen }: FilmCutModalProps) => {
-  const { accessTokenState } = useContext(GlobalContext);
+  const { accessToken } = useGlobalStore();
   const { cutId } = cutSeen;
   const { data, error, loading } = useCutQuery({ variables: { cutId: cutId } });
-  const [accessToken] = accessTokenState;
   const { data: userData } = useMeQuery({ skip: !accessToken });
   const { toast } = useToast();
   const isLoggedIn = useMemo(() => {

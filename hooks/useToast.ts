@@ -1,13 +1,12 @@
 'use client';
 
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { ToastProps } from '@/types';
-import { GlobalContext } from '@/global-context';
 import { v4 } from 'uuid';
+import { useGlobalStore } from '@/global-store';
 
 export const useToast = () => {
-  const { toastsState } = useContext(GlobalContext);
-  const [toasts, setToasts] = toastsState;
+  const { toasts, setToasts } = useGlobalStore();
 
   const toast = (newToast: ToastProps) => {
     const uid = v4();

@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React from 'react';
 import Toast from '@/components/toast';
-import { GlobalContext } from '@/global-context';
+import { useGlobalStore } from '@/global-store';
 
 const ToastContainer = () => {
-  const { toastsState } = useContext(GlobalContext);
-  const [toasts] = toastsState;
+  const { toasts } = useGlobalStore();
 
   return (
     <div className="toast toast-center cursor-pointer">

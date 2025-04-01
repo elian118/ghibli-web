@@ -1,20 +1,19 @@
 'use client';
 
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useLogoutMutation, useMeQuery } from '@/generated/graphql';
 import { useApolloClient } from '@apollo/client';
 import LocalStorage from '@/utils/LocalStorage';
 import { useRouter } from 'next/navigation';
 import Btn from '@/components/btn';
-import { GlobalContext } from '@/global-context';
+import { useGlobalStore } from '@/global-store';
 
 const LoggedInNavbarItem = () => {
   const router = useRouter();
   const client = useApolloClient();
   const [logout, { loading: logoutLoading }] = useLogoutMutation();
 
-  const { accessTokenState } = useContext(GlobalContext);
-  const [accessToken, setAccessToken] = accessTokenState;
+  const { accessToken, setAccessToken } = useGlobalStore();
   const { data } = useMeQuery({ skip: !accessToken });
   const username = useMemo(() => {
     if (data?.me?.username) {

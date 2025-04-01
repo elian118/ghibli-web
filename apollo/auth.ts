@@ -1,14 +1,13 @@
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import { Operation } from '@apollo/client';
-import LocalStorage from '@/utils/LocalStorage';
-import { RefreshAccessTokenDocument, RefreshAccessTokenMutation } from '@/generated/graphql';
+'use client';
 
-export const refreshAccessToken = (
+import { ApolloClient, NormalizedCacheObject, Operation } from '@apollo/client';
+import { RefreshAccessTokenDocument, RefreshAccessTokenMutation } from '@/generated/graphql';
+import LocalStorage from '@/utils/LocalStorage';
+
+export const refreshAccessToken = async (
   _apolloClient: ApolloClient<NormalizedCacheObject>,
   operation: Operation,
 ): Promise<boolean> => {
-  console.log('refresh token expired');
-  console.log(_apolloClient);
   return _apolloClient
     ?.mutate<RefreshAccessTokenMutation>({
       mutation: RefreshAccessTokenDocument,

@@ -1,9 +1,11 @@
+'use client';
+
 import { ApolloClient, from, fromPromise, HttpLink, NormalizedCacheObject } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { createApolloCache } from '@/apollo/createApolloCache';
 import { setContext } from '@apollo/client/link/context';
-import LocalStorage from '@/utils/LocalStorage';
 import { refreshAccessToken } from '@/apollo/auth';
+import LocalStorage from '@/utils/LocalStorage';
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 

@@ -1,15 +1,14 @@
 'use client';
 
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import LogoutNavbarItem from '@/components/LogoutNavbarItem';
 import { useMeQuery } from '@/generated/graphql';
 import LoggedInNavbarItem from '@/components/logged-in-navbar-item';
-import { GlobalContext } from '@/global-context';
+import { useGlobalStore } from '@/global-store';
 
 const Header = () => {
-  const { accessTokenState } = useContext(GlobalContext);
-  const [accessToken] = accessTokenState;
+  const { accessToken } = useGlobalStore();
   const { data } = useMeQuery({ skip: !accessToken });
   const isLoggedIn = useMemo(() => {
     if (accessToken) return data?.me?.id;

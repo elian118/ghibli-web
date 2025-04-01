@@ -1,11 +1,9 @@
 'use client';
 
-import { useContext } from 'react';
-import { GlobalContext, initModal, ModalState } from '@/global-context';
+import { ModalState, useGlobalStore } from '@/global-store';
 
 export const useModal = () => {
-  const { modalState } = useContext(GlobalContext);
-  const [modal, setModal] = modalState;
+  const { modal, setModal } = useGlobalStore();
 
   const isOpen = () => {
     return modal.isOpen;
@@ -17,7 +15,7 @@ export const useModal = () => {
   };
 
   const resetModal = () => {
-    setModal(initModal);
+    setModal({ isOpen: false });
   };
 
   return {
