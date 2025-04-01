@@ -22,7 +22,7 @@ const Header = () => {
           GhibliBestCut
         </Link>
       </div>
-      {isLoggedIn ? <LoggedInNavbarItem data={data} /> : <LogoutNavbarItem />}
+      {!isLoggedIn ? <LogoutNavbarItem /> : <LoggedInNavbarItem />}
     </div>
   );
 };
