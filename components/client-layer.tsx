@@ -7,15 +7,17 @@ import ToastContainer from '@/components/toast-container';
 import { createApolloClient } from '@/apollo/createApolloClient';
 import { useRouter } from 'next/navigation';
 import { useGlobalStore } from '@/global-store';
+import LocalStorage from '@/utils/LocalStorage';
 
 const apolloClient = createApolloClient();
 
 const ClientLayer = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const { setIsMobileDevice, accessToken, setAccessToken, isDark } = useGlobalStore();
+  const { setIsMobileDevice, setAccessToken, isDark } = useGlobalStore();
 
   useEffect(() => {
     if (isMobile()) setIsMobileDevice(true);
+    const accessToken = LocalStorage.getItem('accessToken');
     !!accessToken ? setAccessToken(accessToken) : router.push('/login');
   }, []);
 
